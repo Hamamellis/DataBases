@@ -1,3 +1,75 @@
+
+CREATE OR REPLACE FUNCTION CONSULTA_PRECO (pCOD_CURSO NUMBER) RETURN NUMBER AS vValor NUMBER;
+BEGIN
+    SELECT VALOR_CURSO INTO vValor FROM CURSO
+        WHERE cod_curso = pcod_curso;
+    
+    return (vValor);
+END;
+
+DECLARE 
+    vCod NUMBER := &Codigo;
+    vValor NUMBER;
+BEGIN
+    vValor := Consulta_Preco(vCod);
+    dbms_outPut.Put_line('O preço do Curso é: ' || vValor);
+END;
+
+select * from CURSO;
+
+-- Criar ou Substituir uma Função chamada 'Existe_Aluno'...
+CREATE or REPLACE  FUNCTION Existe_Aluno
+-- Com uma variável pCod_Aluno do mesmo Tipo do Campo Cod_Aluno da Tabela ALUNO, que retorna um Boolean em vAluno
+(pCod_Aluno IN ALUNO.Cod_Aluno%Type) RETURN BOOLEAN IS vAluno NUMBER(10);
+
+BEGIN
+-- Selecione o Código do Aluno e coloque dentro da variável vAluno do Retorno de Boolean (Sim ou Não) - (True or False), 
+-- Onde o Código do ALUNO seja igual a variável pCod_Aluno criada na Função Existe_Aluno...
+    SELECT Cod_Aluno INTO vAluno FROM ALUNO where Cod_Aluno = pCod_Aluno;
+-- Se a resposta vAluno for verdadeira (True)...
+    RETURN ( True );
+-- Se a resposta vAluno for Falsa (False)...
+    EXCEPTION
+        WHEN others THEN
+            RETURN ( False );    
+END;
+
+-- vamos ver os dados da Tabela ALUNO;
+Select * from ALUNO;
+
+DECLARE
+    vCodigo INTEGER := 2;
+BEGIN
+    If Existe_Aluno(vCodigo) THEN
+        dbms_output.put_line('Código encontrado com Sucesso!');
+        ELSE
+            dbms_output.put_line('Código encontrado com Sucesso!');
+    END If;
+END;
+
+select * from table(dbms_xplan.display_cursor(sql_id=>'9cw9vhv3zqrwq', format=>'ALLSTATS LAST'));
+
+
+Select * from Aluno ORDER BY cod_aluno;
+
+Alter TABLE ALUNO DROP column Nascimento;
+
+ALTER TABLE ALUNO ADD Nascimento DATE;
+
+UPDATE ALUNO SET NASCIMENTO = '21/09/1998'
+WHERE cod_aluno = 35;
+
+UPDATE ALUNO SET NASCIMENTO = '21/09/1972'
+WHERE cod_aluno = 36;
+
+UPDATE ALUNO SET NASCIMENTO = '13/03/1981'
+WHERE cod_aluno = 69;
+
+UPDATE ALUNO SET NASCIMENTO = '29/02/2000'
+WHERE cod_aluno = 71;
+
+
+
 select nome, salario from aluno;
 select * from aluno;
 
